@@ -5,10 +5,11 @@ from nltk.metrics import BigramAssocMeasures
 from nltk.probability import FreqDist, ConditionalFreqDist
 from nltk import precision
 from nltk import recall
-
+import random
 #http://andybromberg.com/sentiment-analysis-python/
 #https://github.com/abromberg/sentiment_analysis_python
 
+#POLARITY_DATA_DIR = os.path.join('polarityData', 'rt-polaritydata')
 RT_POLARITY_POS_FILE = '/home/ira/Dropbox/crowdPlanning/manhattan/contain_location_tweets.txt'
 RT_POLARITY_NEG_FILE = '/home/ira/Dropbox/crowdPlanning/manhattan/no_location_tweets.txt'
 
@@ -19,16 +20,24 @@ def evaluate_features(feature_select):
     negFeatures = []
     #http://stackoverflow.com/questions/367155/splitting-a-string-into-words-and-punctuation
     #breaks up the sentences into lists of individual words (as selected by the input mechanism) and appends 'pos' or 'neg' after each list
-    with open(RT_POLARITY_POS_FILE, 'r') as posSentences:
-        for i in posSentences:
-            posWords = re.findall(r"[\w']+|[.,!?;@#]", i.rstrip())
-            posWords = [feature_select(posWords), 'pos'] #pos = contains location
-            posFeatures.append(posWords)
-    with open(RT_POLARITY_NEG_FILE, 'r') as negSentences:
-        for i in negSentences:
-            negWords = re.findall(r"[\w']+|[.,!?;@#]", i.rstrip())
-            negWords = [feature_select(negWords), 'neg'] #neg = doesn't contain location 
-            negFeatures.append(negWords)
+    with open(RT_POLARITY_POS_FILE, "rb") as f:
+        posSentences = f.read().split('\n')
+    random.shuffle(posSentences)
+    
+    with open(RT_POLARITY_NEG_FILE, "rb") as f:
+        negSentences = f.read().split('\n')
+    random.shuffle(negSentences)
+    
+    #with open(RT_POLARITY_POS_FILE, 'r') as posSentences:
+    for i in posSentences:
+        posWords = re.findall(r"[\w']+|[.,!?;@#]", i.rstrip())
+        posWords = [feature_select(posWords), 'pos'] #pos = contains location
+        posFeatures.append(posWords)
+    #with open(RT_POLARITY_NEG_FILE, 'r') as negSentences:
+    for i in negSentences:
+        negWords = re.findall(r"[\w']+|[.,!?;@#]", i.rstrip())
+        negWords = [feature_select(negWords), 'neg'] #neg = doesn't contain location 
+        negFeatures.append(negWords)
 
     
     #selects 3/4 of the features to be used for training and 1/4 to be used for testing
