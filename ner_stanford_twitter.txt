@@ -1,0 +1,12 @@
+train a new model:
+
+ java -cp "stanford-ner.jar:lib/*" -mx4g edu.stanford.nlp.ie.crf.CRFClassifier -prop train/prop_twitter.txt
+ 
+ test the newly trained model (also compute F1, percision, recall):
+ #the test file looks the same as the train
+ 
+ java -cp stanford-ner.jar edu.stanford.nlp.ie.crf.CRFClassifier -loadClassifier dummy-ner-model-twitter.ser.gz
+ -testFile train/twitter_corpus_test.tsv > out_test.txt
+
+ 
+ 
