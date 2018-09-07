@@ -50,7 +50,9 @@ POS_FILE_TRAIN ='/home/ira/Dropbox/twitter/train_with_location.txt'
 POS_FILE_TEST ='/home/ira/Dropbox/twitter/test_with_location.txt'
 ALL_POS_FILE ='/home/ira/Dropbox/twitter/with_location_all.txt'
 ALL_NEG_FILE ='/home/ira/Dropbox/twitter/no_location_all.txt'
-test_file= "/home/ira/Dropbox/twitter/test_all_non_tagged.txt"
+#test_file= "/home/ira/Dropbox/twitter/test_all_non_tagged.txt" #not sure if neccesary
+test_file="/home/ira/Dropbox/twitter/test_file_tagged1.txt"
+
 
 #########  build a dictionary, key is a tweet and the value is the list of geographical closest tweets
 Close_Twt_Dic={}
@@ -59,14 +61,23 @@ with open(test_file, 'rb') as ofh:
     twitts = ofh.readlines()    
 
 for twt in twitts:
-    twtn=(twt.decode("utf-8")).strip()  # convert bytes to strings
-    #str1 = ''.join(twtn) #check if needed
+    twts=(twt.decode("utf-8")).strip()  # convert bytes to strings
+    loc_index=twts.rfind('::::::::::::::::::::::')
+    if loc_index==-1:  #no location in the twit
+        twtn=twts
+    else:
+        twtn=twts[:twts.find('::::::::::::::::::::::')]
     gps1=extract_GPS(twtn) 
     close_tweets=[]
     twitts_list=twitts[:]
     twitts_list.remove(twt)
     for twt2 in twitts_list:
-        twtn2=(twt2.decode("utf-8")).strip()
+        twts2=(twt2.decode("utf-8")).strip()
+        loc_index=twts2.rfind('::::::::::::::::::::::')
+        if loc_index==-1:  #no location in the twit
+            twtn2=twts2
+        else:
+            twtn2=twts2[:twts2.find('::::::::::::::::::::::')]
         gps2=extract_GPS(twtn2)
         dis=haversine(gps1, gps2 )
         if dis<=0.04: #tweets whithin 50 meters from the initial tweet
@@ -75,10 +86,8 @@ for twt in twitts:
 
 location_dic={}
 
-test_file="/home/ira/Dropbox/twitter/test_all_dup.txt"
-with open(test_file, "rb") as f:
-    Sentences = f.readlines()
-for twt in Sentences: 
+
+for twt in twitts: 
     twts=(twt.decode("utf-8")).strip()
     loc_index=twts.rfind('::::::::::::::::::::::')
     if loc_index==-1:  #no location in the twit
@@ -137,33 +146,57 @@ def evaluate_features(fn, tp, fp,feature_select):
     
     #with open(RT_POLARITY_POS_FILE, 'r') as posSentences:
     for i in posSentences_train:
-        posWords = re.findall(r"[\w']+|[.,!?;@#]", str(i).rstrip())
+        i1=(i.decode("utf-8")).strip()
+        loc_index=i1.rfind('::::::::::::::::::::::')
+        if loc_index==-1:  #no location in the twit
+            i1=i1
+        else:
+            i1=i1[:i1.find('::::::::::::::::::::::')]
+        posWords = re.findall(r"[\w']+|[.,!?;@#]", str(i1).rstrip())
         posWords = [feature_select(posWords), 'pos'] #pos = contains location
         posFeatures_train.append(posWords)
         #str_i=(i.decode("utf-8")).strip()
         #Train_twit_Dic[frozenset(posWords[0].items())]=str_i
         
     for i in posSentences_test:
-        posWords_test = re.findall(r"[\w']+|[.,!?;@#]", str(i).rstrip())
+        i1=(i.decode("utf-8")).strip()
+        loc_index=i1.rfind('::::::::::::::::::::::')
+        if loc_index==-1:  #no location in the twit
+            i1=i1
+        else:
+            i1=i1[:i1.find('::::::::::::::::::::::')]
+        posWords_test = re.findall(r"[\w']+|[.,!?;@#]", str(i1).rstrip())
         posWords_test = [feature_select(posWords_test), 'pos'] #pos = contains location
         posFeatures_test.append(posWords_test)
-        str1=(i.decode("utf-8")).strip()
-        Test_twit_Dic[frozenset(posWords_test[0].items())]=str1
+        #str1=(i.decode("utf-8")).strip()
+        Test_twit_Dic[frozenset(posWords_test[0].items())]=i1
     
     #with open(RT_POLARITY_NEG_FILE, 'r') as negSenBufferedReader: <_io.BufferedReader name='/home/ira/Dropbox/twitter/contain_location_tweets.txt'>tences:
     for i in negSentences_train:
-        negWords = re.findall(r"[\w']+|[.,!?;@#]", str(i).rstrip())
+        i1=(i.decode("utf-8")).strip()
+        loc_index=i1.rfind('::::::::::::::::::::::')
+        if loc_index==-1:  #no location in the twit
+            i1=i1
+        else:
+            i1=i1[:i1.find('::::::::::::::::::::::')]
+        negWords = re.findall(r"[\w']+|[.,!?;@#]", str(i1).rstrip())
         negWords = [feature_select(negWords), 'neg'] #neg = doesn't contain location 
         negFeatures_train.append(negWords)
         #str2=(i.decode("utf-8")).strip()
         #Train_twit_Dic[frozenset(negWords[0].items())]=str2
 
     for i in negSentences_test:
-        negWords_test = re.findall(r"[\w']+|[.,!?;@#]", str(i).rstrip())
+        i1=(i.decode("utf-8")).strip()
+        loc_index=i1.rfind('::::::::::::::::::::::')
+        if loc_index==-1:  #no location in the twit
+            i1=i1
+        else:
+            i1=i1[:i1.find('::::::::::::::::::::::')]
+        negWords_test = re.findall(r"[\w']+|[.,!?;@#]", str(i1).rstrip())
         negWords_test = [feature_select(negWords_test), 'neg'] #neg = doesn't contain location 
         negFeatures_test.append(negWords_test)
-        str3=(i.decode("utf-8")).strip()
-        Test_twit_Dic[frozenset(negWords_test[0].items())]=str3
+        #str3=(i1.decode("utf-8")).strip()
+        Test_twit_Dic[frozenset(negWords_test[0].items())]=i1
     #selects 3/4 of the features to be used for training and 1/4 to be used for testing
     #posCutoff = int(math.floor(len(posFeatures)*3/4))
     #negCutoff = int(math.floor(len(negFeatures)*3/4))
