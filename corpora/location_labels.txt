@@ -1,5 +1,32 @@
   #loc_words=['minetta tavern','cornerstone tavern','balthazar restaurant', "rolf's german restaurant",'presidential pizza',
-  "ollie's sichuan restaurant",'bar boulud','hibernia bar','bar boulud','museum modern art','columbia university','hearst tower',
+  "ollie's sichuan restaurant",'bar boulud','hibernia bar','museum modern art','columbia university','hearst tower',
   'freedom tower','bank america tower','times square tower','trump tower','st. patricks cathedral','jane hotel', 
   'bowery hotel', 'palace hotel', 'tribecagrand hotel', 'soho grand hotel', 'plaza hotel', "maxwell's bar", 'stern school']
+  
+  
+  loc_words=['minetta tavern -75
+  ','cornerstone tavern'-37,
+  'balthazar restaurant'-183, 
+  "rolf's german restaurant"-109
+  ,'presidential pizza' -3,
+ "ollie's sichuan restaurant"-11,
+ 'bar boulud', -61
+ 'hibernia bar', - 9
+ 'museum modern art',- 1337
+ 'columbia university'- 707
+ ,'hearst tower', - 191
+  'freedom tower',-240
+  'bank america tower',- 59
+  'times square tower',- 42
+  'trump tower' - 178
+  'st. patricks cathedral',- 5
+  'jane hotel', -176
+  'bowery hotel', -205
+  'palace hotel', -94
+  'tribecagrand hotel',
+  'soho grand hotel', -109
+  'plaza hotel', -100
+  "maxwell's bar",-18
+  'stern school']-141
+    
     
