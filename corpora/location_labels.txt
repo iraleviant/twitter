@@ -4,6 +4,9 @@
   'bowery hotel', 'palace hotel', 'tribecagrand hotel', 'soho grand hotel', 'plaza hotel', "maxwell's bar", 'stern school']
   
   
+  {'museum modern art': 1335, 'bowery hotel': 199, 'trump tower': 170, 'hearst tower': 186, 'cornerstone tavern': 37, "maxwell's bar": 18, 'balthazar restaurant': 182, 'soho grand hotel': 106, 'times square tower': 42, 'plaza hotel': 96, 'jane hotel': 171, 'columbia university': 695, 'minetta tavern': 74, 'stern school': 141, 'bank america tower': 59, 'palace hotel': 91, 'freedom tower': 228, "rolf's german restaurant": 108, "ollie's sichuan restaurant": 11, 'bar boulud': 61, 'hibernia bar': 9, 'st. patricks cathedral': 5, 'presidential pizza': 3}
+
+
   {'museum modern art': 1335, 
 'bowery hotel': 199, 
 'trump tower': 170, '
