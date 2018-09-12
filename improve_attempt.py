@@ -48,10 +48,12 @@ NEG_FILE_TRAIN = '/home/ira/Dropbox/twitter/no_location_for_train.txt'
 NEG_FILE_TEST = '/home/ira/Dropbox/twitter/no_location_for_test.txt'
 POS_FILE_TRAIN ='/home/ira/Dropbox/twitter/train_with_location.txt'
 POS_FILE_TEST ='/home/ira/Dropbox/twitter/test_with_location.txt'
+test_file="/home/ira/Dropbox/twitter/test_file_tagged5.txt"
+
+###Fixed
 ALL_POS_FILE ='/home/ira/Dropbox/twitter/with_location_all.txt'
 ALL_NEG_FILE ='/home/ira/Dropbox/twitter/no_location_all.txt'
 #test_file= "/home/ira/Dropbox/twitter/test_all_non_tagged.txt" #not sure if neccesary
-test_file="/home/ira/Dropbox/twitter/test_file_tagged1.txt"
 
 
 #########  build a dictionary, key is a tweet and the value is the list of geographical closest tweets
@@ -243,7 +245,8 @@ def evaluate_features(fn, tp, fp,feature_select):
                               for size in range(minimum_size, len(words) + 1)
                               for sp in window(words, size)          )
             #print( counts.most_common(5))
-            loc_test=counts.most_common(1)[0][0]
+            loc_test=counts.most_common(1)[0][0]  #[('modern art', 1306), ('museum modern', 1302), ('museum modern art', 1302), ('art (', 1299), ('modern art (', 1297)]
+
             del counts
             
             if len(loc_test)==0 and len(location)==0:
